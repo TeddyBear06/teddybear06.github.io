@@ -16,7 +16,7 @@ Pour récupérer tous les sous-titres de ces vidéos :
 $ python yt_fts.py download "https://www.youtube.com/@LoloCochetMoto/videos" --language fr
 ```
 
-Une fois le téléchargement et le processing effectué (stockage dans une base de données SQLite), si par exemple, je souhaite savoir dans quelles vidéos est évoqué le terme "suzuki", il me suffit d'éxécuter la commande suivante :
+Une fois le téléchargement et le processing effectués (stockage dans une base de données SQLite), si par exemple, je souhaite savoir dans quelles vidéos est évoqué le terme "suzuki", il me suffit d'exécuter la commande suivante :
 
 ```
 $ python yt_fts.py search UCaUsBCtdRYgeu-2AQQZ5Y7Q "suzuki"
@@ -56,7 +56,7 @@ python yt_fts.py search UCaUsBCtdRYgeu-2AQQZ5Y7Q "suzuki" | grep Quote | wc -l
 14
 ```
 
-Mon intervention sur ce projet était liée à la gestion de la page de consentement affichée par YouTube si vous vous y connecté pour la première fois à partir d'une IP en Europe (RGPD).
+Mon intervention sur ce projet était liée à la gestion de la page de consentement affichée par YouTube si vous vous y connectez pour la première fois à partir d'une IP en Europe (RGPD).
 
 Le cheminement et la pull request sont disponibles sur GitHub :
 
