@@ -53,6 +53,7 @@ Je peux même m'amuser à utiliser des outils GNU/Linux pour compter le nombre d
 
 ```
 python yt_fts.py search UCaUsBCtdRYgeu-2AQQZ5Y7Q "suzuki" | grep Quote | wc -l
+14
 ```
 
 Mon intervention sur ce projet était liée à la gestion de la page de consentement affichée par YouTube si vous vous y connecté pour la première fois à partir d'une IP en Europe (RGPD).
