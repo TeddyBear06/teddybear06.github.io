@@ -1,12 +1,12 @@
-# Comprendre ce qu'est une requête paramétrée
+# Comprendre ce qu'est une requête SQL paramétrée
 
 J'ai toujours été étonné de ne pas pouvoir obtenir le résultat (dans le sens "la requête SQL complète", celle qui va être exécutée dans mon SGBD) d'une requête paramétrée avant de l'exécuter.
 
 J'ai naïvement cru pendant - trop - longtemps que du SQL était généré avant l'exécution d'une requête paramétrée.
 
-Qu'il y avait du code quelque part qui avait pour rôle d'échapper toute sorte de potentielles injections SQL.
+Qu'il y avait du code quelque part qui avait pour rôle d'échapper toute sorte de potentielles injections SQL (ce qui aurait été intéressant).
 
-On va prendre comme exemple un code PHP avec une connexion à SQLServer pour illustrer (largement pompé de cette [page](https://www.php.net/manual/fr/function.sqlsrv-prepare.php#example-2056) mais adapté pour des raisons de simplicité et d'illustration du concept) :
+On va prendre comme exemple un code PHP avec une connexion à SQLServer pour illustrer (largement inspiré de cette [page](https://www.php.net/manual/fr/function.sqlsrv-prepare.php#example-2056) mais adapté pour des raisons de simplicité et d'illustration du concept) :
 
 ```php
 <?php
@@ -25,7 +25,7 @@ $identifiant = 99;
 $instruction = sqlsrv_prepare($connexion, $requeteSQL, array( $quantite, $identifiant));
 
 // Pourquoi à partir de ce moment je ne peux pas faire quelque chose comme ...
-//      $instruction->getSQL() 
+//      $instruction->getSQLWithParameters() 
 // Le nom de la méthode est arbitraire mais le concept serait de pouvoir obtenir 
 // la requête SQL suivante :
 //      UPDATE Table_1 SET OrderQty = 10 WHERE SalesOrderID = 99
@@ -33,13 +33,13 @@ $instruction = sqlsrv_prepare($connexion, $requeteSQL, array( $quantite, $identi
 
 La réponse est simple, parce que à aucun moment le code (au sens votre code PHP ou PDO ou le driver ODBC) ne va générer du SQL.
 
-Le seul dans l'histoire qui a toutes les billes pour construire la requête SQL finale est ... Vous avez deviné ?
+Le seul dans l'histoire qui a toutes les "billes" pour construire la requête SQL finale est ... Vous avez deviné ?
 
 Le SGBD.
 
 Quand on prépare une requête il nous faut olbigatoirement 3 éléments :
 
-- Une connexion au SGBD
+- Une connexion au SGBD (je ne comprenais pas d'ailleurs pourquoi on avait besoin de la connexion pour préparer une requête, mais vous allez comprendre par la suite)
 - Une requête SQL (pas encore paramétrée)
 - Des paramètres
 
@@ -120,11 +120,13 @@ void core_sqlsrv_bind_param( _Inout_ sqlsrv_stmt* stmt, _In_ SQLUSMALLINT param_
 }
 ```
 
+La méthode utilisée est [SQLBindParameter](https://learn.microsoft.com/en-us/sql/odbc/reference/syntax/sqlbindparameter-function?view=sql-server-ver16).
+
 Tout se passe sur un même statement et dans la mémoire du SGBD à l'aide de méthodes de l'API ODBC.
 
 La documentation de [l'API est disponible ici](https://learn.microsoft.com/en-us/sql/odbc/reference/syntax/odbc-api-reference?view=sql-server-ver16).
 
-Du coup, toute notre couche de driver PHP sert juste à faire ces quelques lignes de C ([visibles ici](https://learn.microsoft.com/en-us/sql/odbc/reference/develop-app/handles?view=sql-server-ver16)) et que je n'ai pas besoin de commenter vu qu'il y a déjà des commantaires et que maintenant que nous savons quelles sont les différentes étapes effectuées lors d'une requête préparée le code à beaucoup de sens :
+Du coup, toute notre couche de driver PHP sert juste à faire ces quelques lignes de C ([visibles ici](https://learn.microsoft.com/en-us/sql/odbc/reference/develop-app/handles?view=sql-server-ver16)) et que je n'ai pas besoin de commenter vu qu'il y a déjà des commentaires et que maintenant que nous savons quelles sont les différentes étapes effectuées lors d'une requête préparée le code à beaucoup de sens :
 
 
 ```c
