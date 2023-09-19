@@ -65,8 +65,15 @@ J'ai trouvé un [repository qui s'apelle "Chinook"](https://github.com/lerocha/c
 
 Il faut installer la librairie SQLite3 dans sa version de développement pour nous permettre de compiler notre code source et le driver ODBC pour SQLite :
 
-```
-$ sudo apt-get install lisqlite3odbc lisqlite3-dev
+```bash
+$ sudo apt install lisqlite3odbc lisqlite3-dev sqlite3
 ```
 
-Le code source est disponible ici.
+On va charger nos données de test dans la base de données SQLite :
+
+```bash
+$ cat Chinook_Sqlite.sql | sqlite3 test.db
+```
+
+Le code source est disponible [ici](/code/c++_connexion_sqlite.c) et le contenu de notre base de test se trouve [ici](/code/Chinook_Sqlite.sql).
+
