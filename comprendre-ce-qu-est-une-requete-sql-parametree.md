@@ -6,6 +6,8 @@ J'ai naïvement cru pendant - trop - longtemps que du SQL était généré avant
 
 Qu'il y avait du code quelque part qui avait pour rôle d'échapper toute sorte de potentielles injections SQL (ce qui aurait été intéressant).
 
+![Exploits of a Mom](https://imgs.xkcd.com/comics/exploits_of_a_mom.png)
+
 On va prendre comme exemple un code PHP avec une connexion à SQLServer pour illustrer (largement inspiré de cette [page](https://www.php.net/manual/fr/function.sqlsrv-prepare.php#example-2056) mais adapté pour des raisons de simplicité et d'illustration du concept) :
 
 ```php
