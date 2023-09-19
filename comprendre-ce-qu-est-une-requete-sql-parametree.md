@@ -39,11 +39,12 @@ Le seul dans l'histoire qui a toutes les "billes" pour construire la requête SQ
 
 Le SGBD.
 
-Quand on prépare une requête il nous faut olbigatoirement 3 éléments :
+Quand on prépare une requête il nous faut olbigatoirement 2 éléments :
 
 - Une connexion au SGBD (je ne comprenais pas d'ailleurs pourquoi on avait besoin de la connexion pour préparer une requête, mais vous allez comprendre par la suite)
-- Une requête SQL (pas encore paramétrée)
-- Des paramètres
+- Un statement (une instruction)
+
+Mais si on pourrait se passer d'un statement en utilisant un sqlsrv_exec() directement mais c'est l'objet de ce post donc... On va utiliser un statement.
 
 Dans un premier temps, on établi une connexion avec le SGBD (le sqlsrv_connect() dans l'exemple précédent).
 
@@ -51,7 +52,7 @@ Ensuite, la magie opère dans cette méthode [sqlsrv_prepare()](https://github.c
 
 Elle va réaliser plusieurs opérations :
 
-1. Créer un statement (une instruction) qui va être stockée en mémoire pour être joué plus tard (c'est ça la clef, le "plus tard")
+1. Créer un statement qui va être stockée en mémoire pour être joué plus tard (c'est ça la clef, le "plus tard")
 2. Ajouter le texte de la requête SQL à ce statement (l'instruction de l'étape n°1)
 3. Ajouter les N paramètres (typés ou non) à ce statement (l'instruction de l'étape n°1)
 
